@@ -20,6 +20,10 @@ class GameViewModel: ViewModel() {
     var circleX by mutableStateOf(0f)
     var circleY by mutableStateOf(0f)
 
+    // *** 新增：儲存分數的變數 ***
+    var score by mutableStateOf(0)
+        private set // 外部只能讀取，不能直接設定
+
     // 設定螢幕寬度與高度
     fun SetGameSize(w: Float, h: Float) {
         screenWidthPx = w
@@ -37,6 +41,8 @@ class GameViewModel: ViewModel() {
 
                 if (circleX >= screenWidthPx - 100){
                     circleX = 100f
+                    // *** 修改：碰到右邊邊界時分數 + 1 ***
+                    score += 1
                 }
             }
         }
