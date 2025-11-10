@@ -17,8 +17,7 @@ import androidx.compose.ui.input.pointer.pointerInput
 @Composable
 fun GameScreen(message: String, gameViewModel: GameViewModel) {
 
-    // *** TODO: 請將 "你的姓名" 替換為你的實際姓名 ***
-    val studentName = "你的姓名"
+    val studentName = "張佑先"
     val scoreDisplay = "分數: ${gameViewModel.score}"
 
     Box(modifier = Modifier
