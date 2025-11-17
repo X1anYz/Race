@@ -19,7 +19,7 @@ import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 
-// NOTE: Assumes R.drawable, GameViewModel, and associated data classes exist in the project.
+// NOTE: 假設 R.drawable.horse0 到 R.drawable.horse3 圖片資源已存在。
 
 @Composable
 fun GameScreen(message: String, gameViewModel: GameViewModel) {
@@ -37,20 +37,20 @@ fun GameScreen(message: String, gameViewModel: GameViewModel) {
             .fillMaxSize()
             .background(Color.Yellow)
     ) {
-        // 1. Game Canvas (fills the entire box)
+        // 1. Game Canvas (繪製馬匹)
         Canvas(
             modifier = Modifier
                 .fillMaxSize()
         ) {
-            // Draw the main horse (assuming 'horse' is the player's controlled entity)
+            // Draw the main horse (第1馬)
             drawImage(
                 image = imageBitmaps[gameViewModel.horse.HorseNo],
                 dstOffset = IntOffset(gameViewModel.horse.HorseX, gameViewModel.horse.HorseY),
                 dstSize = IntSize(300, 300)
             )
 
-            // Draw other horses/competitors
-            for (i in 0 until gameViewModel.horses.size) { // Changed loop to iterate based on actual list size
+            // Draw other horses/competitors (第2、3馬)
+            for (i in 0 until gameViewModel.horses.size) {
                 drawImage(
                     image = imageBitmaps[gameViewModel.horses[i].HorseNo],
                     dstOffset = IntOffset(
@@ -62,8 +62,7 @@ fun GameScreen(message: String, gameViewModel: GameViewModel) {
             }
         }
 
-        // 2. Overlay UI elements (Text and Button)
-        // Positioned at the bottom center of the screen for controls and information
+        // 2. Overlay UI elements (文字和按鈕)
         Column(
             modifier = Modifier
                 .align(Alignment.BottomCenter)
@@ -71,17 +70,28 @@ fun GameScreen(message: String, gameViewModel: GameViewModel) {
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            // Display message and screen dimensions using string interpolation
+            // 顯示標題
             Text(
-                text = "$message${gameViewModel.screenWidthPx} * ${gameViewModel.screenHeightPx}"
+                text = message
             )
+
+            // 顯示獲勝訊息
+            if (gameViewModel.winMessage.isNotEmpty()) {
+                Text(
+                    text = gameViewModel.winMessage,
+                    color = Color.Red
+                )
+            }
 
             // Start Game Button
             Button(
                 onClick = {
-                    gameViewModel.gameRunning = true
-                    gameViewModel.StartGame()
-                }
+                    // 只有在遊戲未運行時才允許重新開始
+                    if (!gameViewModel.gameRunning) {
+                        gameViewModel.StartGame()
+                    }
+                },
+                enabled = !gameViewModel.gameRunning // 遊戲運行中時禁用按鈕
             ) {
                 Text("遊戲開始") // Game Start
             }

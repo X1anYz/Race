@@ -50,7 +50,8 @@ class MainActivity : ComponentActivity() {
         setContent {
             // 假設 RaceTheme 存在並使用
             RaceTheme {
-                GameScreen(message = "兩匹賽馬，隨機速度奔跑。", gameViewModel) // Updated message
+                // (1) 修改文字
+                GameScreen(message = "賽馬遊戲(作者：張佑先)", gameViewModel)
             }
         }
     }

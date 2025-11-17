@@ -10,7 +10,8 @@ import kotlin.random.Random
 class Horse(
     // horseIndex 用於設置初始 Y 位置。
     private val horseIndex: Int = 0,
-    initialY: Int = 0
+    initialY: Int = 0,
+    val Id: Int // 馬匹的編號 (1, 2, 3)
 ) {
     // Current X position (horizontal movement) - 當前 X 軸位置
     var HorseX by mutableIntStateOf(0)
@@ -26,11 +27,9 @@ class Horse(
      * 更新賽馬的位置並推進動畫幀。
      */
     fun Run() {
-        // Move the horse forward with a random step size (10 to 30) in each run cycle
         // 賽馬移動處理：每一步以 10 到 30 的隨機距離前進
         HorseX += Random.nextInt(10, 31) // Random.nextInt(10, 31) 包含 10 到 30
 
-        // Cycle the animation frames (0, 1, 2, 3)
         // 循環動畫幀 (0, 1, 2, 3)
         HorseNo = (HorseNo + 1) % 4
     }
