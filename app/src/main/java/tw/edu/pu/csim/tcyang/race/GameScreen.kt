@@ -13,12 +13,17 @@ import androidx.compose.ui.Alignment // 👈 導入 Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.res.imageResource
+import androidx.compose.ui.unit.IntOffset
+import androidx.compose.ui.unit.IntSize
 @Composable
 fun GameScreen(message: String, gameViewModel: GameViewModel) {
 
     val studentName = "張佑先"
     val scoreDisplay = "分數: ${gameViewModel.score}"
+    val imageBitmap = ImageBitmap.imageResource(R.drawable.horse0)
 
     Box(modifier = Modifier
         .fillMaxSize()
@@ -34,10 +39,11 @@ fun GameScreen(message: String, gameViewModel: GameViewModel) {
 
         ) {
             // 繪製圓形
-            drawCircle(
-                color = Color.Red,
-                radius = 100f,
-                center = Offset(gameViewModel.circleX, gameViewModel.circleY)
+            drawImage(
+                image = imageBitmap,
+                // 使用 circleX 和 circleY 作為圖片的左上角位置
+                dstOffset = IntOffset(gameViewModel.circleX.toInt(), gameViewModel.circleY.toInt()),
+                dstSize = IntSize(300, 300)
             )
         }
 
